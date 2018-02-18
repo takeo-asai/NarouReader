@@ -1,9 +1,33 @@
 import React from 'react';
+import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux';
+
+import { Content, Button, Text } from 'native-base';
 
 import Table from '../components/table';
 
-const items = ['Simon Mignolet', 'Nathaniel Clyne', 'Dejan Lovren', 'Mama Sakho', 'Emre Can'];
+type StateToProps = {
+  rankings: string[],
+};
+type DispatchToProps = {
+  refresh: () => void,
+};
 
-const Ranking = () => <Table items={items} />;
+function Ranking(props: StateToProps & DispatchToProps) {
+  return (
+    <Content>
+      <Button onPress={() => props.refresh()}>
+        <Text>a</Text>
+      </Button>
+      <Table items={props.rankings} />
+    </Content>
+  );
+}
 
-export default Ranking;
+const mapStateToProps: MapStateToProps<*, *, StateToProps> = state => ({
+  rankings: state.ranking.rankings,
+});
+const mapDispatchToProps: MapDispatchToProps<*, *, DispatchToProps> = dispatch => ({
+  refresh: () => dispatch({ type: 'REFRESH_RANKING' }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Ranking);
