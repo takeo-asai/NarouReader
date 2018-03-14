@@ -6,8 +6,6 @@ import Ranking from '../containers/ranking';
 export default () => (
   <Container>
     <Header />
-    <Content>
-      <Ranking />
-    </Content>
+    <Ranking />
   </Container>
 );
