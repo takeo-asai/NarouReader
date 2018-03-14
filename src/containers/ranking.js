@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux';
 
-import { Content, Button, Text } from 'native-base';
+import { Content } from 'native-base';
 import { RefreshControl } from 'react-native';
 
 import Table from '../components/table';
+
+import { refreshRanking, fetchRanking } from '../modules/ranking';
 
 type StateToProps = {
   rankings: string[],
@@ -22,14 +24,10 @@ function Ranking(props: StateToProps & DispatchToProps) {
           refreshing={props.isRefreshing}
           onRefresh={() => {
             props.refresh();
-            console.log('abc');
           }}
         />
       }
     >
-      <Button onPress={() => props.refresh()}>
-        <Text>a</Text>
-      </Button>
       <Table items={props.rankings} />
     </Content>
   );
@@ -39,8 +37,12 @@ const mapStateToProps: MapStateToProps<*, *, StateToProps> = state => ({
   rankings: state.ranking.rankings,
   isRefreshing: state.ranking.isRefreshing,
 });
+
 const mapDispatchToProps: MapDispatchToProps<*, *, DispatchToProps> = dispatch => ({
-  refresh: () => dispatch({ type: 'REFRESH_RANKING' }),
+  refresh: () => {
+    dispatch(refreshRanking());
+    dispatch(fetchRanking());
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Ranking);
