@@ -1,0 +1,29 @@
+# SLACK_URL is defined in .env
+
+default_platform(:android)
+
+platform :android do
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  desc "Notify TEST"
+  lane :notify_slack do
+    slack(message: ":tada: Slack Notification is working")
+  end
+
+  desc "Submit a new Beta Build to Google Play Beta"
+  lane :beta do
+    gradle(task: "clean assembleRelease")
+    upload_to_play_store(track: "beta")
+    slack(message: ":tada: [Beta] Successfully deployed to Google Play")
+  end
+
+  desc "Deploy a new version to the Google Play"
+  lane :deploy do
+    gradle(task: "clean assembleRelease")
+    upload_to_play_store
+    slack(message: ":tada: [Store] Successfully deployed to Google Play")
+  end
+end
