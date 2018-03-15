@@ -1,4 +1,4 @@
-package com.naroureader;
+package com.github.takeoasai.NarouReader;
 
 import com.facebook.react.ReactActivity;
 
