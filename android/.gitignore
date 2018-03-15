@@ -1,3 +1,4 @@
 *.keystore
 .env
 secret.json
+app/google-services.json
