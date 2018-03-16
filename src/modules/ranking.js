@@ -1,4 +1,5 @@
 import 'rxjs';
+import Novel from './novel';
 
 export const REFRESH_RANKING = 'REFRESH_RANKING';
 const FETCH_RANKING = 'FETCH_RANKING';
@@ -41,31 +42,8 @@ export function rankingReducer(state = initState, action) {
 export const fetchRankingEpic = action$ =>
   action$
     .ofType(FETCH_RANKING)
-    .mergeMap(() => Ranking.fetch(new Date()))
-    .map(rankings => setRanking(rankings.map(ranking => ranking.novelId)));
-
-// https://api.syosetu.com/rank/rankget/?rtype=20130502-d&out=json
-class Ranking {
-  static fetch(date: Date) {
-    const month = `00${date.getMonth() + 1}`.slice(-2);
-    const day = `00${date.getDate()}`.slice(-2);
-    const rtype = `${date.getFullYear()}${month}${day}`;
-    const url = `https://api.syosetu.com/rank/rankget/?rtype=${rtype}-d&out=json`;
-    return fetch(url)
-      .then(response => response.json())
-      .then(json => json.map(novel => new Ranking(novel.ncode, novel.pt, novel.rank)))
-      .catch((error) => {
-        // TODO: エラー処理
-        console.log(error);
-      });
-  }
-
-  novelId: string;
-  pt: number;
-  rank: number;
-  constructor(novelId: string, pt, rank) {
-    this.novelId = novelId;
-    this.pt = pt;
-    this.rank = rank;
-  }
-}
+    .mergeMap(() => Novel.fetch(new Date()))
+    .do((novels) => {
+      console.log(novels);
+    })
+    .map(novels => setRanking(novels.map(novel => novel.title)));
