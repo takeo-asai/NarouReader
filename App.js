@@ -35,6 +35,7 @@ firebase
   .then((notification) => {
     console.log('notification, ', notification);
   });
+firebase.fabric.crashlytics().log('Notify something');
 
 export default () => (
   <Provider store={store}>
