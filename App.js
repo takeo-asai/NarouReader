@@ -36,6 +36,14 @@ firebase
     console.log('notification, ', notification);
   });
 firebase.fabric.crashlytics().log('Notify something');
+// firebase.fabric.crashlytics().crash();
+firebase
+  .database()
+  .ref('charts')
+  .on('value', (snapshot) => {
+    const value = snapshot.val();
+    console.log('firebase value', value);
+  });
 
 export default () => (
   <Provider store={store}>
