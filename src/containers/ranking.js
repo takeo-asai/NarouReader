@@ -9,7 +9,7 @@ import Table from '../components/table';
 import { refreshRanking, fetchRanking } from '../modules/ranking';
 
 type StateToProps = {
-  rankings: string[],
+  rankings: any[],
   isRefreshing: boolean,
 };
 type DispatchToProps = {
@@ -28,7 +28,7 @@ function Ranking(props: StateToProps & DispatchToProps) {
         />
       }
     >
-      <Table items={props.rankings} />
+      <Table novels={props.rankings} />
     </Content>
   );
 }

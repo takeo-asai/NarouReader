@@ -22,10 +22,8 @@ const setRanking = rankings => ({
   },
 });
 
-const items = ['Ranking Mignolet', 'Nathaniel Clyne', 'Dejan Lovren', 'Mama Sakho', 'Emre Can'];
-
 const initState = {
-  rankings: items,
+  rankings: [],
   isRefreshing: false,
 };
 export function rankingReducer(state = initState, action) {
@@ -46,4 +44,4 @@ export const fetchRankingEpic = action$ =>
     .do((novels) => {
       console.log(novels);
     })
-    .map(novels => setRanking(novels.map(novel => novel.title)));
+    .map(novels => setRanking(novels));

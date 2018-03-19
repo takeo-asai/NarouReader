@@ -1,17 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { List, ListItem, Text } from 'native-base';
+import { NovelType } from '../modules/novel';
 
 type Props = {
-  items: string[],
+  novels: NovelType[],
 };
 
 const Table = (props: Props) => (
   <List
-    dataArray={props.items}
-    renderRow={item => (
+    dataArray={props.novels}
+    renderRow={(novel: NovelType) => (
       <ListItem>
-        <Text>{item}</Text>
+        <Text>
+          {novel.title}, {novel.description}, {novel.ncode}, {novel.keywords}, {novel.updatedAt},{' '}
+          {novel.writer}, {novel.stories}
+        </Text>
       </ListItem>
     )}
   />
